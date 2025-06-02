@@ -1,78 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Mushroom Classifier</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mushroom Classifier AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    body {
+    :root {
+      --primary: #4CAF50;
+      --accent: #2e7d32;
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-blur: blur(20px);
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+    }
+
+    body {
       font-family: 'Montserrat', sans-serif;
-      background: url('https://images.unsplash.com/photo-1548048211-357ddb2c920f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG11c2hyb29tfGVufDB8fDB8fHww') no-repeat center center fixed;
+      background: url('https://images.unsplash.com/photo-1548048211-357ddb2c920f?w=1600') no-repeat center center fixed;
       background-size: cover;
-      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
       overflow: hidden;
     }
 
-    .main {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      min-height: 100vh;
-      background: rgba(0, 0, 0, 0.55);
-    
-    }
-
-    h1 {
-      font-size: 40px;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 18px;
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border-radius: 20px;
+      padding: 50px 40px;
       max-width: 700px;
-      line-height: 1.6;
+      width: 90%;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      animation: fadeInUp 0.9s ease;
+    }
+
+    .card h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    }
+
+    .card p {
+      font-size: 18px;
+      line-height: 1.7;
       margin-bottom: 30px;
+      opacity: 0.9;
     }
 
-    #predict_btn {
-      background-color: #28a745;
-      color: white;
-      padding: 12px 25px;
-      font-size: 17px;
+    .card button {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
       border: none;
-      border-radius: 25px;
+      border-radius: 30px;
+      padding: 14px 35px;
+      font-size: 17px;
+      font-weight: 600;
+      color: #fff;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
     }
 
-    #predict_btn:hover {
-      background-color: #218838;
+    .card button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(76, 175, 80, 0.6);
     }
 
     .mushroom-image {
       margin-top: 40px;
-      max-width: 400px;
-      max-height: 400px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      width: 100%;
+      max-width: 350px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .mushroom-image:hover {
+      transform: scale(1.03);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 35px 20px;
+      }
+
+      .card h1 {
+        font-size: 32px;
+      }
+
+      .card p {
+        font-size: 16px;
+      }
+
+      .card button {
+        font-size: 16px;
+        padding: 12px 28px;
+      }
+
+      .mushroom-image {
+        margin-top: 30px;
+        max-width: 270px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="main">
-    <h1>Mushroom Classifier AI</h1>
+  <div class="card">
+    <h1>🍄 Mushroom Classifier AI</h1>
     <p>
-      We will use this AI project to classify various types of mushrooms. <br>
-      Our AI model helps identify mushrooms as edible or poisonous based on their traits.
-      Perfect for nature lovers, foragers, and mushroom explorers!
+      This AI-powered tool helps you instantly determine whether a mushroom is <strong>edible or poisonous</strong> based on its features.<br>
+      Designed for nature enthusiasts, hikers, and science lovers alike.
     </p>
-    <a href="{{ url_for('predict_page') }}">
-      <button id="predict_btn">Try Prediction</button>
-    </a>
-    <img src="https://images.unsplash.com/photo-1571074635691-b910c7a5cdbb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bXVzaHJvb218ZW58MHx8MHx8fDA%3D" alt="Mushroom" class="mushroom-image" />
+
+    <!-- Wrap button and image inside a vertical container -->
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+      <img
+        src="https://images.unsplash.com/photo-1571074635691-b910c7a5cdbb?w=700"
+        alt="Mushroom"
+        class="mushroom-image"
+      />
+            <a href="{{ url_for('predict_page') }}">
+        <button>🔍 Try Prediction</button>
+      </a>
+    </div>
   </div>
 </body>
+
 </html>
